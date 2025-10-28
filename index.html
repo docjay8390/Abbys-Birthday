@@ -3,1052 +3,1331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A birthday murder mystery game for Abby. Solve the case by interviewing suspects and finding contradictions in their statements.">
-    <meta name="keywords" content="murder mystery game, detective game, birthday game, interactive mystery">
-    <meta name="author" content="Murder Mystery Game">
-    <meta property="og:title" content="Murder Mystery Game for Abby">
-    <meta property="og:description" content="A special birthday murder mystery investigation game">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary">
-    <link rel="icon" type="image/png" href="https://th.bing.com/th/id/OIP.DC6PcqSYGEYK6wTddDa2sgHaHa?w=176&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3">
-    <meta name="twitter:title" content="Murder Mystery Game">
-    <meta name="twitter:description" content="Solve the case in this interactive murder mystery game">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" as="style" href="data:text/css;base64,LyogQ3JpdGljYWwgQ1NTICov">
-    
-    <title>Murder Mystery Game for Abby</title>
-    
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Game",
-        "name": "Murder Mystery Game",
-        "description": "An interactive murder mystery game where you play as detective Abby solving cases",
-        "genre": "Puzzle/Mystery",
-        "playMode": "SinglePlayer",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "Any"
-    }
-    </script>
-    
+    <title>Crime Investigation Game: The Midnight Mystery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Critical CSS - Inlined for immediate rendering */
+        /* All your existing CSS remains exactly the same */
+        :root {
+            --dark-bg: #1a1a2e;
+            --darker-bg: #16213e;
+            --card-bg: #0f3460;
+            --accent: #e94560;
+            --accent-hover: #ff6b81;
+            --text: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --success: #4caf50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --evidence: #2196f3;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
         
         body {
-            background-color: #0d1117;
-            color: #e6e6e6;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
             line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
             padding: 20px;
-        }
-        
-        /* Modern Minimalist Landing Page */
-        .landing-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(15, 52, 96, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
             min-height: 100vh;
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
         }
         
-        .birthday-card {
-            background-color: #161b22;
-            border-radius: 12px;
-            padding: 60px 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid #30363d;
-            max-width: 700px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .birthday-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #e94560, #4ecdc4);
-        }
-        
-        .birthday-card h1 {
-            color: #f0f6fc;
-            font-size: clamp(2rem, 5vw, 2.8rem);
-            margin-bottom: 20px;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-        }
-        
-        .birthday-card .name-highlight {
-            color: #e94560;
-            font-weight: 500;
-        }
-        
-        .birthday-card p {
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
-            margin-bottom: 25px;
-            color: #8b949e;
-            line-height: 1.7;
-            font-weight: 300;
-        }
-        
-        .game-description {
-            font-size: 1.1rem;
-            margin-top: 40px;
-            padding: 30px;
-            background-color: #0d1117;
-            border-radius: 8px;
-            border-left: 3px solid #e94560;
-            text-align: left;
-        }
-        
-        .game-description p {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-        
-        .game-description p:last-child {
-            margin-bottom: 0;
-        }
-        
-        .start-button {
-            background: linear-gradient(135deg, #e94560 0%, #c13584 100%);
-            color: white;
-            border: none;
-            padding: 16px 42px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            margin-top: 30px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
-        }
-        
-        .start-button:hover,
-        .start-button:focus {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
-        }
-        
-        .minimal-decoration {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, #e94560, #4ecdc4);
-            margin: 30px auto;
-        }
-        
-        /* Game Styles */
         .game-container {
-            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
         header {
             text-align: center;
             margin-bottom: 30px;
             padding: 20px;
-            background-color: #161b22;
+            background-color: var(--darker-bg);
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            border: 1px solid #30363d;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+        }
+        
+        .detective-badge {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(233, 69, 96, 0.1);
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+        }
+        
+        .detective-badge img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
         }
         
         h1 {
-            color: #e94560;
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            color: var(--accent);
             margin-bottom: 10px;
-            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        .subtitle {
-            color: #8b949e;
+        .tagline {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .intro {
+            background-color: var(--darker-bg);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .intro h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .intro h2::before {
+            content: "🕵️‍♀️";
+            font-size: 1.5rem;
+        }
+        
+        .case-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .case-detail-item {
+            background: rgba(233, 69, 96, 0.1);
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .case-detail-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        
+        .case-detail-value {
+            font-weight: 500;
+            color: var(--accent);
+        }
+        
+        .container {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .sidebar {
+            flex: 0 0 300px;
+            background-color: var(--darker-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            height: fit-content;
+        }
+        
+        .sidebar h2 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .suspect-list {
+            list-style: none;
+        }
+        
+        .suspect-item {
+            background-color: var(--card-bg);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 3px solid transparent;
+        }
+        
+        .suspect-item:hover {
+            background-color: rgba(233, 69, 96, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .suspect-item.active {
+            background-color: rgba(233, 69, 96, 0.15);
+            border-left: 3px solid var(--accent);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .suspect-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+        }
+        
+        .suspect-info {
+            flex: 1;
+        }
+        
+        .suspect-name {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .suspect-relationship {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .main-panel {
+            flex: 1;
+            background-color: var(--darker-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .suspect-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .suspect-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .suspect-portrait {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--accent);
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .suspect-bio {
+            flex: 1;
+        }
+        
+        .suspect-name-large {
+            font-size: 2.2rem;
+            color: var(--accent);
+            font-family: 'Crimson Pro', serif;
+            margin-bottom: 10px;
+        }
+        
+        .suspect-description {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        
+        .motive-section, .alibi-section, .evidence-section {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--accent);
+            font-weight: 600;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .motive-text, .alibi-text {
+            line-height: 1.7;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .alibi-text::before {
+            content: "“";
+            font-size: 3rem;
+            position: absolute;
+            left: -5px;
+            top: -15px;
+            color: rgba(233, 69, 96, 0.3);
+        }
+        
+        .evidence-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .evidence-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: rgba(33, 150, 243, 0.1);
+            border-radius: 6px;
+            border-left: 3px solid var(--evidence);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-item::before {
+            content: "🔍";
             font-size: 1.2rem;
         }
         
-        .game-area {
+        .speaker {
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-left: 10px;
+            color: var(--accent);
+            transition: transform 0.2s;
+        }
+        
+        .speaker:hover {
+            transform: scale(1.2);
+        }
+        
+        .action-buttons {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .suspects-panel {
-            flex: 1;
-            min-width: 300px;
-            background-color: #161b22;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            border: 1px solid #30363d;
-        }
-        
-        .interview-panel {
-            flex: 2;
-            min-width: 300px;
-            background-color: #161b22;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            border: 1px solid #30363d;
-        }
-        
-        .panel-title {
-            color: #e94560;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #21262d;
-        }
-        
-        .suspects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px;
-        }
-        
-        .suspect-card {
-            background-color: #21262d;
-            border-radius: 8px;
-            padding: 15px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #30363d;
-        }
-        
-        .suspect-card:hover,
-        .suspect-card:focus {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.2);
-            border-color: #e94560;
-        }
-        
-        .suspect-card.selected {
-            background-color: #e94560;
-            box-shadow: 0 0 15px rgba(233, 69, 96, 0.3);
-            border-color: #e94560;
-        }
-        
-        .suspect-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            background-color: #30363d;
-            display: flex;
-            align-items: center;
+            margin-top: 25px;
             justify-content: center;
-            overflow: hidden;
-            border: 2px solid #30363d;
-        }
-        
-        .suspect-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            loading: lazy;
-        }
-        
-        .suspect-card.selected .suspect-avatar {
-            border-color: white;
-        }
-        
-        .interview-content {
-            min-height: 300px;
-            background-color: #21262d;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #30363d;
-        }
-        
-        .statement {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #0d1117;
-            border-radius: 8px;
-            border-left: 4px solid #e94560;
-        }
-        
-        .clues {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .clue {
-            background-color: #0d1117;
-            padding: 10px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #30363d;
-            font-size: 0.9rem;
-        }
-        
-        .clue:hover,
-        .clue:focus {
-            background-color: #e94560;
-            border-color: #e94560;
-        }
-        
-        .clue.selected {
-            background-color: #e94560;
-            box-shadow: 0 0 10px rgba(233, 69, 96, 0.3);
-            border-color: #e94560;
-        }
-        
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
         }
         
         button {
-            background-color: #e94560;
+            background-color: var(--accent);
             color: white;
             border: none;
             padding: 12px 25px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s ease;
-            flex: 1;
-            min-width: 200px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
         }
         
-        button:hover,
-        button:focus {
-            background-color: #c13584;
+        button:hover {
+            background-color: var(--accent-hover);
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
-        button:disabled {
-            background-color: #30363d;
-            cursor: not-allowed;
-            transform: none;
-            color: #8b949e;
+        button:active {
+            transform: translateY(0);
         }
         
-        .notes-panel {
-            background-color: #161b22;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            border: 1px solid #30363d;
+        button.accuse {
+            background-color: var(--danger);
         }
         
-        .notes-content {
-            background-color: #21262d;
-            border-radius: 8px;
-            padding: 15px;
-            min-height: 100px;
-            margin-top: 10px;
-            border: 1px solid #30363d;
+        button.accuse:hover {
+            background-color: #e53935;
         }
         
-        .game-over {
-            text-align: center;
-            padding: 30px;
-            background-color: #161b22;
-            border-radius: 10px;
-            margin-top: 20px;
+        .result {
             display: none;
-            border: 1px solid #30363d;
+            background-color: var(--darker-bg);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
         
-        .game-over h2 {
-            color: #e94560;
+        .result h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .verdict {
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
         
         .correct {
-            color: #4ecdc4;
+            background-color: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid var(--success);
         }
         
         .incorrect {
-            color: #e94560;
+            background-color: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid var(--danger);
         }
         
-        .explanation {
-            background-color: #21262d;
-            border-radius: 8px;
+        .killer-reveal {
+            background-color: var(--card-bg);
             padding: 20px;
+            border-radius: 8px;
             margin-top: 20px;
-            text-align: left;
-            border: 1px solid #30363d;
+            border-left: 4px solid var(--warning);
         }
         
-        .explanation h3 {
-            color: #e94560;
-            margin-bottom: 15px;
-        }
-        
-        .explanation ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .case-context {
-            background-color: #21262d;
-            border-radius: 8px;
+        .analysis {
+            margin-top: 20px;
             padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #e94560;
-            border: 1px solid #30363d;
+            background-color: rgba(233, 69, 96, 0.1);
+            border-radius: 8px;
         }
         
-        .case-context h3 {
-            color: #e94560;
-            margin-bottom: 10px;
+        .analysis h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-family: 'Crimson Pro', serif;
         }
         
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
+        .clue-highlight {
+            background-color: rgba(255, 152, 0, 0.2);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                flex: none;
+                width: 100%;
+            }
+            
+            .suspect-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .detective-badge {
+                position: relative;
+                top: 0;
+                left: 0;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
         
         @media (max-width: 768px) {
-            .game-area {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .suspect-portrait {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .action-buttons {
                 flex-direction: column;
-            }
-            
-            .suspects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-            
-            .birthday-card {
-                padding: 40px 20px;
-            }
-            
-            .actions {
-                flex-direction: column;
+                width: 100%;
             }
             
             button {
-                min-width: 100%;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .case-details {
+                grid-template-columns: 1fr;
             }
         }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .notes-panel {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+        
+        .notes-panel h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        #detective-notes {
+            width: 100%;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 10px;
+            color: var(--text);
+            font-family: 'Roboto', sans-serif;
+            resize: vertical;
+        }
+        
+        .difficulty-indicator {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            background-color: rgba(233, 69, 96, 0.2);
+            color: var(--accent);
+        }
 
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+        .voice-loading {
+            display: none;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Skip to main content for accessibility -->
-    <a href="#main-content" class="sr-only">Skip to main content</a>
-
-    <!-- Modern Minimalist Landing Page -->
-    <div class="landing-page" id="landing-page">
-        <div class="birthday-card">
-            <h1>Happy Birthday, <span class="name-highlight">Abby</span></h1>
-            <p>A simple game for you to enjoy before reading the book I gave you</p>
-            
-            <div class="minimal-decoration" aria-hidden="true"></div>
-            
-            <div class="game-description">
-                <p>Put your skills to the test with this murder mystery game.</p>
-                <p>Interview suspects, find contradictions in their statements, and identify the real culprit.</p>
-                <p>Can you solve the case?</p>
+    <div class="game-container">
+        <header>
+            <div class="detective-badge">
+                <img style="object-fit: fit;" src="images/abbyyy.jpg" alt="Detective Abby">
+                <div style="text-align: left !important;">
+                    <strong >Abby</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Homicide Division</div>
+                </div>
             </div>
-            
-            <button class="start-button" id="start-button" aria-label="Begin the murder mystery investigation">
-                Begin Investigation
-            </button>
+            <h1>The Midnight Mystery</h1>
+            <p class="tagline">Can you identify the killer through careful deduction?</p>
+        </header>
+        
+        <div class="intro" id="intro">
+            <!-- Intro will be populated by JS -->
         </div>
-    </div>
-
-    <!-- Game Container -->
-    <div class="game-container" id="game-container">
+        
         <div class="container">
-            <header>
-                <h1>Murder Mystery</h1>
-                <p class="subtitle" id="case-title">Case Loading...</p>
-            </header>
-            
-            <main id="main-content">
-                <div class="case-context" id="case-context">
-                    <h2>Case Background</h2>
-                    <p id="case-description">Loading case details...</p>
-                </div>
-                
-                <div class="game-area">
-                    <section class="suspects-panel" aria-labelledby="suspects-title">
-                        <h2 class="panel-title" id="suspects-title">Suspects</h2>
-                        <div class="suspects-grid" id="suspects-container" role="list" aria-label="List of suspects">
-                            <!-- Suspects will be populated by JavaScript -->
+            <div class="sidebar">
+                <h2>Suspects <span class="difficulty-indicator">Analyze All</span></h2>
+                <ul class="suspect-list" id="suspect-list">
+                    <!-- Suspects will be populated by JS -->
+                </ul>
+            </div>
+            <div class="main-panel" id="main-panel">
+                <div class="suspect-details">
+                    <div class="suspect-header">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Select a suspect" class="suspect-portrait">
+                        <div class="suspect-bio">
+                            <h2 class="suspect-name-large">Select a Suspect</h2>
+                            <p class="suspect-description">Click on a suspect from the list to investigate their background, motive, alibi, and evidence. Analyze all information carefully before making an accusation.</p>
                         </div>
-                    </section>
-                    
-                    <section class="interview-panel" aria-labelledby="interview-title">
-                        <h2 class="panel-title" id="interview-title">Interview</h2>
-                        <div class="interview-content" id="interview-content">
-                            <p>Select a suspect to begin the interview.</p>
-                        </div>
-                        
-                        <div class="clues" id="clues-container" role="list" aria-label="Available clues">
-                            <!-- Clues will be populated by JavaScript -->
-                        </div>
-                        
-                        <div class="actions">
-                            <button id="accuse-btn" disabled aria-label="Accuse the currently selected suspect">
-                                Accuse This Suspect
-                            </button>
-                            <button id="solve-btn" aria-label="Reveal that you know who the murderer is">
-                                I Know Who Did It!
-                            </button>
-                        </div>
-                    </section>
-                </div>
-                
-                <section class="notes-panel" aria-labelledby="notes-title">
-                    <h2 class="panel-title" id="notes-title">Detective's Notes</h2>
-                    <div class="notes-content" id="notes-content">
-                        <p>Victim: <span id="victim-name">Loading...</span></p>
-                        <p id="time-of-death">Time of death: Loading...</p>
-                        <p id="crime-location">Location: Loading...</p>
-                        <p id="weapon">Weapon: Loading...</p>
-                        <p>Your collected clues will appear here as you find contradictions.</p>
                     </div>
-                </section>
-                
-                <div class="game-over" id="game-over" role="dialog" aria-labelledby="game-over-title" aria-live="polite">
-                    <h2 id="game-over-title">Case Closed!</h2>
-                    <p id="result-message"></p>
-                    <div class="explanation" id="explanation">
-                        <!-- Explanation will be populated by JavaScript -->
-                    </div>
-                    <button id="play-again-btn" aria-label="Investigate another murder mystery case">
-                        Investigate Another Case
-                    </button>
                 </div>
-            </main>
+            </div>
+        </div>
+        
+        <div class="notes-panel">
+            <h3>Abby's Notes</h3>
+            <textarea id="detective-notes" placeholder="Record your observations, contradictions, and theories here..."></textarea>
+        </div>
+        
+        <div class="result" id="result">
+            <h2 id="accused-title">Investigation Result</h2>
+            <div class="verdict" id="verdict">
+                <!-- Verdict will be populated by JS -->
+            </div>
+            <div class="analysis" id="analysis">
+                <!-- Analysis will be populated by JS -->
+            </div>
+            <div class="killer-reveal">
+                <h2 id="killer-reveal-title">The Real Killer</h2>
+                <p id="killer-reveal"></p>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="cases-solved">0</div>
+                    <div class="stat-label">Cases Solved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="accuracy">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="current-streak">0</div>
+                    <div class="stat-label">Current Streak</div>
+                </div>
+            </div>
+            <div class="action-buttons" style="margin-top: 25px;">
+                <button id="play-again" style="display: none;">
+                    <span>🔄</span> Play Again
+                </button>
+                <button id="next-case" style="display: none;">
+                    <span>🔍</span> Next Case
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Game data - Multiple scenarios
+        // Game state
+        const gameState = {
+            casesSolved: parseInt(localStorage.getItem('casesSolved')) || 0,
+            casesPlayed: parseInt(localStorage.getItem('casesPlayed')) || 0,
+            currentStreak: parseInt(localStorage.getItem('currentStreak')) || 0,
+            bestStreak: parseInt(localStorage.getItem('bestStreak')) || 0
+        };
+
+        // Define multiple crime scenarios
         const scenarios = [
             {
                 id: 1,
-                title: "The Office Affair",
-                victim: "Tony",
-                timeOfDeath: "Between 6:30 PM and 7:30 PM",
-                location: "Office building, 15th floor",
-                weapon: "Heavy paperweight",
-                description: "Tony, a mid-level manager at a tech firm, was found dead in his office after hours. He was working late to prepare for an important presentation. Security shows he was the last to leave his department, but someone returned. All suspects had access to the building and motives related to workplace conflicts.",
-                suspects: [
-                    { 
-                        id: 'jay', 
-                        name: 'Jay', 
-                        avatar: 'images/joshuagarcia.jpeg',
-                        statement: "I left the office at 5:30 PM sharp to meet friends for dinner. We were at Mario's Italian Restaurant until 9 PM. Several people saw me there, and I have the receipt with timestamp.",
-                        clue: "Security camera shows Jay's car leaving the parking garage at 7:15 PM, not 5:30 PM.",
-                        explanation: "Jay claimed he left at 5:30 PM for dinner, but security footage proves his car was still in the garage until 7:15 PM, placing him at the office during the murder."
-                    },
-                    { 
-                        id: 'louis', 
-                        name: 'Louis', 
-                        avatar: 'images/louis.jpg',
-                        statement: "I was working from home all afternoon and evening. I had a video conference with the Singapore team from 6 PM to 8 PM. You can check the meeting logs.",
-                        clue: "IT records show Louis accessed office files from his work computer in the building at 6:45 PM.",
-                        explanation: "Louis claimed to be working from home, but system logs prove he was physically in the office building accessing files during the time of the murder."
-                    },
-                    { 
-                        id: 'josh', 
-                        name: 'Josh', 
-                        avatar: 'images/josh.jpg',
-                        statement: "I went to the gym after work from 5:45 PM to 7:30 PM. My fitness tracker shows my workout, and the gym staff knows me well.",
-                        clue: "The gym's membership scanner shows Josh entered at 5:45 PM but exited at 6:20 PM, not 7:30 PM.",
-                        explanation: "Josh claimed to be at the gym the entire time, but records show he left early, giving him opportunity to return to the office and commit the murder."
-                    },
-                    { 
-                        id: 'zette', 
-                        name: 'Zette', 
-                        avatar: 'images/zette.jpg',
-                        statement: "I was at a client dinner from 6 PM until 9 PM. The restaurant is 30 minutes from the office, so I couldn't have been there.",
-                        clue: "The client cancelled the dinner last minute due to illness, which Zette knew about at 5:30 PM.",
-                        explanation: "Zette claimed to be at a client dinner, but the dinner was cancelled, leaving her without an alibi for the evening of the murder."
-                    },
-                    { 
-                        id: 'kassy', 
-                        name: 'Kassy', 
-                        avatar: 'images/kassandra.jpeg',
-                        statement: "I was picking up my son from soccer practice at 6 PM, then we went home and ordered pizza. My son and the delivery driver can confirm.",
-                        clue: "Soccer practice was cancelled due to rain, which was announced to all parents at 4 PM.",
-                        explanation: "Kassy claimed to be picking up her son from soccer, but practice was cancelled, giving her the opportunity to be at the office during the murder."
-                    },
-                    { 
-                        id: 'mj', 
-                        name: 'MJ', 
-                        avatar: 'images/492074316_3558328864301152_6631248952161447965_n.jpg',
-                        statement: "I was at the movies with my friend. We saw the 6:15 PM showing of the new Marvel film. I have the ticket stubs.",
-                        clue: "The theater's security footage shows MJ alone and leaving halfway through the movie at 7:05 PM.",
-                        explanation: "MJ claimed to be at the movies with his friend, but he was actually alone and left early, giving him time to commit the murder."
-                    },
-                    { 
-                        id: 'jomar', 
-                        name: 'Jomar', 
-                        avatar: 'images/joms.jpg',
-                        statement: "I was working late in the accounting department until 8 PM. I spoke with the cleaning staff when they came through around 7 PM.",
-                        clue: "The cleaning staff confirms they didn't start on the 15th floor until 8:30 PM due to a spill on 12th floor.",
-                        explanation: "Jomar claimed the cleaning staff saw him at 7 PM, but they weren't on that floor until 8:30 PM, making his alibi impossible."
-                    }
+                title: "The Poisoned Mogul",
+                victim: "Mr. Victor Reyes",
+                victimAge: "65",
+                victimOccupation: "Real Estate Mogul",
+                crimeScene: "his upscale suburban home",
+                causeOfDeath: "poisoning via a spiked drink",
+                timeOfDeath: "9:15 PM",
+                intro: "Welcome, Abby! Mr. Victor Reyes, a 65-year-old real estate mogul, was found dead in his upscale suburban home last night. The autopsy reveals he was poisoned via a spiked drink during a tense family dinner. Time of death is estimated at 9:15 PM. There are multiple motives among the suspects—inheritance from his $50 million estate, business rivalries, and personal betrayals. Your sidekicks—Homer Acuna (tech expert), Angel Ochoa (forensic analyst), Moises (interrogator), Tony (surveillance guy), Cath (psychologist), and Ellaine (historian)—have gathered clues. Click a suspect to view their alibi and clue. Accuse wisely!",
+                killerReveals: [
+                    "Mikay's alibi was contradicted by the library's digital records system which showed no checkouts after 7 PM. Additionally, the book she claimed to have borrowed wasn't in the library's inventory that day. Forensic analysis matched the poison to chemicals from her laboratory.",
+                    "Josh's alibi fell apart when security footage from the building across from his 'business meeting' location showed his car parked there from 9:45 PM to 11:20 PM. His fingerprints were also found on the poisoned glass.",
+                    "Jomar's claim of being at the gym was disproven by the facility's biometric scanners which showed he left at 8:05 PM. Traces of the poison were found on his work gloves.",
+                    "Zette's computer logs showed her account was active but with no keystroke activity between 8:40-9:15 PM. Security logs show her keycard was used at Victor's house at 8:50 PM.",
+                    "MJ's event photos show him present at 7:30 PM and 11:00 PM but none between 8:45-10:15 PM. Phone location data placed him near the crime scene at 9:10 PM.",
+                    "Louis's streaming service shows the movie was paused at 8:42 PM and not resumed until 9:28 PM. Cell tower data shows his phone connected to a tower near Victor's house at 9:05 PM.",
+                    "Kassandra's sister's security system shows no one entered or exited the house during the time Kassandra claimed to be there. Her distinctive earring was found near the crime scene.",
+                    "Jay's hotel check-in records show he arrived at 6:15 PM but no keycard activity until 10:30 PM. Toll records show his car passing back into the city at 8:20 PM."
                 ]
             },
             {
                 id: 2,
-                title: "The Neighborhood Mystery",
-                victim: "Cath",
-                timeOfDeath: "Between 8:00 PM and 9:00 PM",
-                location: "Victim's home - 124 Maple Street",
-                weapon: "Kitchen knife from victim's home",
-                description: "Cath, a well-liked community organizer, was found dead in her home during a neighborhood watch meeting she was supposed to host. The back door was forced open, and valuables were scattered but not taken, suggesting the burglary was staged. All suspects were nearby and knew the victim.",
-                suspects: [
-                    { 
-                        id: 'jay', 
-                        name: 'Jay', 
-                        avatar: 'images/joshuagarcia.jpeg',
-                        statement: "I was walking my dog around the block from 7:45 PM to 8:30 PM. Several neighbors saw me, and my fitness app shows the route I took.",
-                        clue: "Jay's dog was at the groomer until 9 PM that evening, as confirmed by the groomer's records.",
-                        explanation: "Jay claimed to be walking his dog, but the dog was actually at the groomer, making his alibi impossible and giving him opportunity to commit the murder."
-                    },
-                    { 
-                        id: 'louis', 
-                        name: 'Louis', 
-                        avatar: 'images/louis.jpg',
-                        statement: "I was streaming a new series on Netflix all evening. My account shows I watched three episodes back-to-back from 7:30 PM to 9:45 PM.",
-                        clue: "Netflix was experiencing regional outages from 8:05 PM to 8:50 PM, confirmed by their service status page.",
-                        explanation: "Louis claimed to be streaming Netflix during the exact time the service was down in our area, proving he's lying about his alibi."
-                    },
-                    { 
-                        id: 'josh', 
-                        name: 'Josh', 
-                        avatar: 'images/josh.jpg',
-                        statement: "I was at the library studying for my real estate exam until it closed at 9 PM. The librarian knows me and can confirm.",
-                        clue: "The library closed early at 7 PM for an staff training event, with signs posted all week.",
-                        explanation: "Josh claimed to be at the library until 9 PM, but it closed at 7 PM, giving him plenty of time to commit the murder."
-                    },
-                    { 
-                        id: 'zette', 
-                        name: 'Zette', 
-                        avatar: 'images/zette.jpg',
-                        statement: "I was on a video call with my sister overseas from 7:30 PM to 9:00 PM. The time difference works perfectly for her schedule.",
-                        clue: "Zette's sister was actually in the hospital for emergency surgery that evening, confirmed by hospital records.",
-                        explanation: "Zette claimed to be on a video call with her sister, but her sister was in surgery, making this alibi impossible."
-                    },
-                    { 
-                        id: 'kassy', 
-                        name: 'Kassy', 
-                        avatar: 'images/kassandra.jpeg',
-                        statement: "I was baking cookies for the school fundraiser and delivered them to Mrs. Peterson at 8:15 PM. She can verify the time.",
-                        clue: "Mrs. Peterson was out of town visiting her daughter, confirmed by airline records and her daughter's statement.",
-                        explanation: "Kassy claimed to deliver cookies to Mrs. Peterson, but Mrs. Peterson wasn't home, exposing Kassy's fabricated alibi."
-                    },
-                    { 
-                        id: 'mj', 
-                        name: 'MJ', 
-                        avatar: 'images/492074316_3558328864301152_6631248952161447965_n.jpg',
-                        statement: "I was fixing my neighbor's sink from 7:30 PM until about 8:45 PM. He can confirm I was there the whole time.",
-                        clue: "The neighbor had a professional plumber scheduled for that exact time, with receipt showing service from 7:00 PM to 8:30 PM.",
-                        explanation: "MJ claimed to be fixing his neighbor's sink, but a professional plumber was actually doing the work, proving MJ wasn't there."
-                    },
-                    { 
-                        id: 'jomar', 
-                        name: 'Jomar', 
-                        avatar: 'images/joms.jpg',
-                        statement: "I was at the community center setting up for tomorrow's event from 7:00 PM to 9:30 PM. The security guard saw me there.",
-                        clue: "The community center was closed for pest control treatment from 6:00 PM to 10:00 PM, with notices posted.",
-                        explanation: "Jomar claimed to be at the community center, but it was closed for pest control, making his presence there impossible."
-                    }
+                title: "The Strangled CEO",
+                victim: "Mrs. Elena Vargas",
+                victimAge: "58",
+                victimOccupation: "Tech CEO",
+                crimeScene: "her high-rise apartment",
+                causeOfDeath: "strangulation",
+                timeOfDeath: "10:30 PM",
+                intro: "Welcome, Detective Abby! Mrs. Elena Vargas, a 58-year-old tech CEO, was discovered strangled in her high-rise apartment. The nature of the strangulation marks suggests the killer was a close acquaintance. Time of death is estimated at 10:30 PM. Suspects are her ambitious heirs and business partners, driven by greed and revenge. Your team has evidence. Investigate!",
+                killerReveals: [
+                    "Mikay's security badge logs show she entered the building at 9:45 PM but didn't exit until 11:15 PM. Fibers from her scarf were found at the crime scene.",
+                    "Josh's business dinner was actually scheduled for the following night according to the hotel's event calendar. His DNA was found under Elena's fingernails.",
+                    "Jomar's fitness tracker data shows he was stationary for 45 minutes during his supposed workout, and his location was near Elena's apartment building.",
+                    "Zette's keycard was used to access Elena's floor at 10:15 PM, and security footage shows her leaving in a hurry at 10:45 PM.",
+                    "MJ's charity gala had a strict no-reentry policy, and security records show he exited at 9:40 PM. His cufflink was found at the crime scene.",
+                    "Louis's home security system logged the front door opening at 10:10 PM and closing at 10:50 PM. His fingerprints were found on a broken vase near the body.",
+                    "Kassandra's neighbor reported hearing a loud argument from her apartment at 10:15 PM, and her car was seen leaving the parking garage at 10:35 PM.",
+                    "Jay's conference badge was not scanned at any sessions after 4 PM, and his rental car was recorded entering Elena's building garage at 10:05 PM."
                 ]
             }
         ];
 
-        // Game state
-        let gameState = {
-            currentScenario: null,
-            victim: '',
-            culprit: '',
-            selectedSuspect: null,
-            collectedClues: [],
-            gameSolved: false
-        };
+        // All 8 original suspects with UNIQUE NATURAL VOICES
+        const suspectsData = [
+            // GIRLS - Each with unique female voice
+            {
+                name: "Mikay",
+                image: "images/mikay.jpg",
+                voice: { 
+                    // Young, intelligent female voice
+                    rate: 0.95,
+                    pitch: 1.15,
+                    volume: 1.0,
+                    lang: 'en-US',
+                    gender: 'female'
+                },
+                relationships: ["Daughter", "Business Partner"],
+                descriptions: [
+                    "Victor's estranged daughter who recently reconciled. Runs a small biotechnology startup.",
+                    "Elena's ambitious protege who was being groomed to take over the company."
+                ],
+                motives: [
+                    "Stood to inherit $15 million but was recently cut from the will after a heated argument about her business failures.",
+                    "Would lose her executive position after Elena discovered she was leaking company secrets to competitors."
+                ],
+                alibis: [
+                    "I was at the Central Library from 7 PM to 10 PM researching for my startup. I checked out a book on pharmaceutical innovations around 8:30 PM.",
+                    "I was working late at the office until 11 PM preparing for the quarterly board meeting. Several colleagues saw me there."
+                ],
+                evidenceOptions: [
+                    [
+                        "Security footage shows her car entering the library parking lot at 6:55 PM but no footage of her inside",
+                        "Phone records show her phone was in the library area until 8:40 PM, then no signal until 9:50 PM",
+                        "Found in her bag: receipt for coffee purchased 2 blocks from victim's house at 8:15 PM"
+                    ],
+                    [
+                        "Security badge logs show she entered the building at 9:45 PM but didn't exit until 11:15 PM",
+                        "Computer activity logs show no work done between 10:15-10:45 PM",
+                        "Elevator security footage shows her on the victim's floor at 10:20 PM"
+                    ]
+                ]
+            },
+            {
+                name: "Zette",
+                image: "images/zette.jpg",
+                voice: {
+                    // Mature, sophisticated female voice
+                    rate: 0.88,
+                    pitch: 1.08,
+                    volume: 0.95,
+                    lang: 'en-US',
+                    gender: 'female'
+                },
+                relationships: ["Personal Assistant", "Executive Assistant"],
+                descriptions: [
+                    "Victor's efficient personal assistant of 8 years. Knew all his business and personal affairs.",
+                    "Elena's executive assistant who handled her schedule and confidential documents."
+                ],
+                motives: [
+                    "Was secretly embezzling small amounts for years. Victor had scheduled an audit for the following week.",
+                    "Had been stealing company secrets and selling them to competitors. Elena was about to discover this."
+                ],
+                alibis: [
+                    "I was working late at the office until 9:30 PM, then went straight home. I have emails sent during that time and my computer login records.",
+                    "I was organizing files in the executive storage room from 8 PM to 10:30 PM. The cleaning staff saw me there."
+                ],
+                evidenceOptions: [
+                    [
+                        "Computer logs show her account was active but no keystroke activity between 8:40-9:15 PM",
+                        "Neighbor reports seeing her car pull into her driveway at 9:55 PM - too soon if she left office at 9:30 PM",
+                        "Security log shows her keycard used to access Victor's house at 8:50 PM"
+                    ],
+                    [
+                        "Storage room security shows she entered at 8:05 PM but left at 8:25 PM, not 10:30 PM",
+                        "Her personal laptop was accessing company servers remotely during the time of the murder",
+                        "Security footage shows her on Elena's private elevator at 10:10 PM"
+                    ]
+                ]
+            },
+            {
+                name: "MJ",
+                image: "./images/492074316_3558328864301152_6631248952161447965_n.jpg",
+                voice: {
+                    // Elegant, confident female voice
+                    rate: 0.92,
+                    pitch: 1.12,
+                    volume: 1.0,
+                    lang: 'en-US',
+                    gender: 'female'
+                },
+                relationships: ["Rival Businessman", "Competitor CEO"],
+                descriptions: [
+                    "Owner of a competing real estate firm. Had multiple legal disputes with Victor.",
+                    "CEO of a rival tech company that was losing market share to Elena's firm."
+                ],
+                motives: [
+                    "Victor was about to win a major contract that would have bankrupted MJ's company. Had threatened Victor publicly.",
+                    "Elena's new product launch would have destroyed MJ's company's market position."
+                ],
+                alibis: [
+                    "I was at the charity gala at the Metropolitan Hall all evening from 7 PM until midnight. Hundreds of people saw me there.",
+                    "I was hosting a product launch event at our corporate headquarters from 7 PM to 11 PM. Many witnesses can confirm."
+                ],
+                evidenceOptions: [
+                    [
+                        "Event photos show him present at 7:30 PM and 11:00 PM but none between 8:45-10:15 PM",
+                        "His driver confirmed dropping him off at 7 PM but wasn't scheduled to pick him up until 11:30 PM",
+                        "Phone location data places him within half a mile of victim's house at 9:10 PM"
+                    ],
+                    [
+                        "Product launch attendance records show he gave his speech at 7:45 PM then left the stage",
+                        "Security footage shows him leaving through a back entrance at 8:50 PM",
+                        "His car was spotted near Elena's apartment building at 10:05 PM"
+                    ]
+                ]
+            },
+            {
+                name: "Kassandra",
+                image: "./images/kassandra.jpeg",
+                voice: {
+                    // Smooth, melodic female voice
+                    rate: 0.98,
+                    pitch: 1.18,
+                    volume: 0.92,
+                    lang: 'en-US',
+                    gender: 'female'
+                },
+                relationships: ["Neighbor", "Business Rival"],
+                descriptions: [
+                    "Victor's next-door neighbor who had ongoing property disputes with him.",
+                    "Elena's business school rival who was jealous of her success."
+                ],
+                motives: [
+                    "Victor was blocking her plans to build an extension that would encroach on his property.",
+                    "Was passed over for CEO position that went to Elena, destroying her career ambitions."
+                ],
+                alibis: [
+                    "I was visiting my sister across town from 6 PM until after 11 PM. We had dinner and watched TV.",
+                    "I was at a yoga retreat all evening from 6 PM to 10 PM. The instructor and other participants can confirm."
+                ],
+                evidenceOptions: [
+                    [
+                        "Sister confirms the visit but recalls Kassandra leaving briefly around 8:30 PM for 'fresh air'",
+                        "Home security camera shows movement in Kassandra's backyard at 9:05 PM",
+                        "A distinctive earring matching Kassandra's was found near Victor's back door"
+                    ],
+                    [
+                        "Yoga retreat sign-in sheet shows she left at 8:15 PM and didn't return",
+                        "Her car was recorded entering Elena's building parking garage at 9:25 PM",
+                        "Diary entries found describing her hatred for Elena and desire for revenge"
+                    ]
+                ]
+            },
+            
+            // BOYS - Each with unique male voice
+            {
+                name: "Jay",
+                image: "images/jayyy.jpg",
+                voice: {
+                    // Casual, friendly male voice
+                    rate: 0.94,
+                    pitch: 0.98,
+                    volume: 1.0,
+                    lang: 'en-US',
+                    gender: 'male'
+                },
+                relationships: ["Business Rival", "Former Partner"],
+                descriptions: [
+                    "Former business partner who had a bitter falling out with Victor years ago.",
+                    "Elena's former business partner who was forced out of the company."
+                ],
+                motives: [
+                    "Victor's latest business venture would directly compete with Jay's struggling company.",
+                    "Elena's success was a constant reminder of his failure. Wanted to destroy what he helped build."
+                ],
+                alibis: [
+                    "I was at a business conference in the next city all day and stayed overnight at the conference hotel.",
+                    "I was on a flight to Chicago that departed at 8 PM and didn't land until 11 PM. I have my boarding pass."
+                ],
+                evidenceOptions: [
+                    [
+                        "Hotel check-in records show he arrived at 6:15 PM but no keycard activity until 10:30 PM",
+                        "Toll records show his car passing back into the city at 8:20 PM",
+                        "Conference badge was not scanned at any sessions after 4 PM"
+                    ],
+                    [
+                        "Flight records show he changed his reservation to a later flight at 6:45 PM",
+                        "Airport security shows him leaving through a different terminal at 8:15 PM",
+                        "His rental car was recorded entering Elena's building at 9:40 PM"
+                    ]
+                ]
+            },
+            {
+                name: "Jomar",
+                image: "images/joms.jpg",
+                voice: {
+                    // Deep, serious male voice
+                    rate: 0.86,
+                    pitch: 0.88,
+                    volume: 1.0,
+                    lang: 'en-US',
+                    gender: 'male'
+                },
+                relationships: ["Nephew", "Personal Trainer"],
+                descriptions: [
+                    "Victor's nephew who recently moved in with him after financial troubles.",
+                    "Elena's personal trainer who was having an affair with her."
+                ],
+                motives: [
+                    "The primary beneficiary if Mikay was removed from the will. Was deeply in debt to dangerous loan sharks.",
+                    "Elena was ending their affair and threatening to tell his wife, which would destroy his marriage."
+                ],
+                alibis: [
+                    "I was at the fitness center from 7:30 PM to 10 PM. Did my regular workout routine - treadmill, weights, then sauna.",
+                    "I was at my son's basketball game from 7 PM to 9:30 PM. Dozens of parents saw me there cheering."
+                ],
+                evidenceOptions: [
+                    [
+                        "Fitness center biometric records show he entered at 7:32 PM but exited at 8:05 PM",
+                        "Security camera across from victim's house captured his distinct motorcycle at 8:50 PM",
+                        "Found in his jacket: theater ticket stub for a show that started at 8 PM downtown"
+                    ],
+                    [
+                        "Game footage shows empty seat where he claimed to be sitting during key periods",
+                        "Stadium security shows him leaving through emergency exit at 8:15 PM",
+                        "Text messages show him arranging to meet Elena at her apartment at 8:30 PM"
+                    ]
+                ]
+            },
+            {
+                name: "Josh",
+                image: "images/josh.jpg",
+                voice: {
+                    // Confident, professional male voice
+                    rate: 0.92,
+                    pitch: 0.95,
+                    volume: 1.0,
+                    lang: 'en-US',
+                    gender: 'male'
+                },
+                relationships: ["Business Partner", "Junior Executive"],
+                descriptions: [
+                    "Victor's ambitious junior partner who handled the commercial property portfolio.",
+                    "Elena's junior executive who was recently passed over for promotion."
+                ],
+                motives: [
+                    "Was about to be forced out of the company after Victor discovered financial irregularities in Josh's accounts.",
+                    "Discovered Elena was planning to demote him after finding evidence of embezzlement."
+                ],
+                alibis: [
+                    "I was at a late business dinner with clients at The Grand Hotel from 8 PM to 11 PM. We discussed the new waterfront development project.",
+                    "I was working from home all evening, participating in a video conference with international colleagues from 9 PM to midnight."
+                ],
+                evidenceOptions: [
+                    [
+                        "Hotel reservation shows his name for 8 PM but no record of actual arrival",
+                        "Credit card shows payment at a gas station 5 miles from victim's house at 9:05 PM",
+                        "Text message to wife at 9:30 PM mentioned 'stuck in traffic near Oak Street'"
+                    ],
+                    [
+                        "Home security system shows him leaving at 9:15 PM and returning at 11:05 PM",
+                        "Video conference participants confirm he left abruptly at 9:40 PM and didn't return",
+                        "Phone records show calls made from near Elena's apartment building"
+                    ]
+                ]
+            },
+            {
+                name: "Louis",
+                image: "images/louis.jpg",
+                voice: {
+                    // Authoritative, professional male voice
+                    rate: 0.87,
+                    pitch: 0.92,
+                    volume: 1.0,
+                    lang: 'en-US',
+                    gender: 'male'
+                },
+                relationships: ["Family Lawyer", "Corporate Lawyer"],
+                descriptions: [
+                    "Victor's lawyer who handled his will and estate planning for over 20 years.",
+                    "Elena's corporate lawyer who handled her company's legal affairs."
+                ],
+                motives: [
+                    "Was named as executor with a substantial fee, but Victor was planning to change law firms.",
+                    "Was overbilling Elena's company by millions and she was about to discover the fraud."
+                ],
+                alibis: [
+                    "I was at home with my family all evening. We watched a movie together from 8 PM to 10 PM.",
+                    "I was reviewing legal documents in my home office from 8 PM to 11 PM. My wife can confirm."
+                ],
+                evidenceOptions: [
+                    [
+                        "Streaming service shows the movie was paused at 8:42 PM and not resumed until 9:28 PM",
+                        "Home security system logged the front door opening at 8:50 PM and closing at 9:20 PM",
+                        "Cell tower data shows his phone connected to a tower near Victor's house at 9:05 PM"
+                    ],
+                    [
+                        "Home office computer shows no activity between 9:15-10:05 PM",
+                        "His car was seen entering Elena's building garage at 9:50 PM",
+                        "Financial records show large transfers to his account from Elena's company"
+                    ]
+                ]
+            }
+        ];
+
+        // Game variables
+        let currentScenario;
+        let killerIndex;
+        let killer;
+        let currentSuspect = null;
+        let usedScenarios = [];
 
         // DOM elements
-        const landingPage = document.getElementById('landing-page');
-        const gameContainer = document.getElementById('game-container');
-        const startButton = document.getElementById('start-button');
-        const suspectsContainer = document.getElementById('suspects-container');
-        const interviewContent = document.getElementById('interview-content');
-        const cluesContainer = document.getElementById('clues-container');
-        const notesContent = document.getElementById('notes-content');
-        const victimNameElement = document.getElementById('victim-name');
-        const timeOfDeathElement = document.getElementById('time-of-death');
-        const crimeLocationElement = document.getElementById('crime-location');
-        const weaponElement = document.getElementById('weapon');
-        const caseTitleElement = document.getElementById('case-title');
-        const caseContextElement = document.getElementById('case-context');
-        const caseDescriptionElement = document.getElementById('case-description');
-        const accuseButton = document.getElementById('accuse-btn');
-        const solveButton = document.getElementById('solve-btn');
-        const gameOverScreen = document.getElementById('game-over');
-        const resultMessage = document.getElementById('result-message');
-        const explanationElement = document.getElementById('explanation');
-        const playAgainButton = document.getElementById('play-again-btn');
+        const introElement = document.getElementById('intro');
+        const suspectListElement = document.getElementById('suspect-list');
+        const mainPanelElement = document.getElementById('main-panel');
+        const resultElement = document.getElementById('result');
+        const accusedTitleElement = document.getElementById('accused-title');
+        const verdictElement = document.getElementById('verdict');
+        const analysisElement = document.getElementById('analysis');
+        const killerRevealTitleElement = document.getElementById('killer-reveal-title');
+        const killerRevealElement = document.getElementById('killer-reveal');
+        const playAgainButton = document.getElementById('play-again');
+        const nextCaseButton = document.getElementById('next-case');
+        const casesSolvedElement = document.getElementById('cases-solved');
+        const accuracyElement = document.getElementById('accuracy');
+        const currentStreakElement = document.getElementById('current-streak');
+        const detectiveNotesElement = document.getElementById('detective-notes');
 
-        // Start the game
-        function startGame() {
-            landingPage.style.display = 'none';
-            gameContainer.style.display = 'block';
-            initGame();
-        }
-
-        // Initialize the game
-        function initGame() {
-            // Select a random scenario
-            const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-            gameState.currentScenario = randomScenario;
-            
-            // Reset game state
-            gameState = {
-                currentScenario: randomScenario,
-                victim: randomScenario.victim,
-                culprit: randomScenario.suspects[Math.floor(Math.random() * randomScenario.suspects.length)].id,
-                selectedSuspect: null,
-                collectedClues: [],
-                gameSolved: false
-            };
-
-            // Update UI with scenario details
-            caseTitleElement.textContent = randomScenario.title;
-            caseDescriptionElement.textContent = randomScenario.description;
-            victimNameElement.textContent = gameState.victim;
-            timeOfDeathElement.textContent = `Time of death: ${randomScenario.timeOfDeath}`;
-            crimeLocationElement.textContent = `Location: ${randomScenario.location}`;
-            weaponElement.textContent = `Weapon: ${randomScenario.weapon}`;
-            
-            gameOverScreen.style.display = 'none';
-            interviewContent.innerHTML = '<p>Select a suspect to begin the interview.</p>';
-            cluesContainer.innerHTML = '';
-            explanationElement.innerHTML = '';
-            notesContent.innerHTML = `
-                <p>Victim: <span id="victim-name">${gameState.victim}</span></p>
-                <p>Time of death: ${randomScenario.timeOfDeath}</p>
-                <p>Location: ${randomScenario.location}</p>
-                <p>Weapon: ${randomScenario.weapon}</p>
-                <p>Your collected clues will appear here as you find contradictions.</p>
-            `;
-            accuseButton.disabled = true;
-            solveButton.disabled = false;
-
-            // Render suspects
-            renderSuspects();
-        }
-
-        // Render the suspects in the UI
-        function renderSuspects() {
-            suspectsContainer.innerHTML = '';
-            
-            gameState.currentScenario.suspects.forEach(suspect => {
-                const suspectCard = document.createElement('div');
-                suspectCard.className = 'suspect-card';
-                suspectCard.dataset.id = suspect.id;
-                suspectCard.setAttribute('role', 'listitem');
-                suspectCard.setAttribute('tabindex', '0');
-                suspectCard.setAttribute('aria-label', `Select suspect ${suspect.name}`);
-                
-                suspectCard.innerHTML = `
-                    <div class="suspect-avatar">
-                        <img src="${suspect.avatar}" alt="${suspect.name}" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjcwIiByeD0iMzUiIGZpbGw9IiMzMDM2M2QiLz4KPHN2ZyB4PSIyMCIgeT0iMTUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM4Yjk0OWUiIHN0cm9rZS13aWR0aD0iMiI+CjxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTIwIDIxdi0yYTQgNCAwIDAgMC00LTRINGE0IDQgMCAwIDAtNCA0djIiPgo8Y2lyY2xlIGN4PSIxMiIgY3k9IjciIHI9IjQiPgo8L3N2Zz4KPC9zdmc+'">
-                    </div>
-                    <div class="suspect-name">${suspect.name}</div>
-                `;
-                
-                suspectCard.addEventListener('click', () => selectSuspect(suspect.id));
-                suspectCard.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        selectSuspect(suspect.id);
-                    }
-                });
-                
-                suspectsContainer.appendChild(suspectCard);
-            });
-        }
-
-        // Select a suspect to interview
-        function selectSuspect(suspectId) {
-            // Update selected suspect in UI
-            document.querySelectorAll('.suspect-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            document.querySelector(`.suspect-card[data-id="${suspectId}"]`).classList.add('selected');
-            
-            // Update game state
-            gameState.selectedSuspect = suspectId;
-            
-            // Display statement
-            const suspect = gameState.currentScenario.suspects.find(s => s.id === suspectId);
-            interviewContent.innerHTML = `
-                <div class="statement">
-                    <h3>${suspect.name}'s Statement:</h3>
-                    <p>"${suspect.statement}"</p>
-                </div>
-                <p>Look for contradictions in this statement. If you find one, click on the corresponding clue.</p>
-            `;
-            
-            // Display clues
-            renderClues(suspectId);
-            
-            // Enable accuse button
-            accuseButton.disabled = false;
-        }
-
-        // Render the clues for a suspect
-        function renderClues(suspectId) {
-            cluesContainer.innerHTML = '';
-            
-            gameState.currentScenario.suspects.forEach(suspect => {
-                if (suspect.id === suspectId) {
-                    const clueElement = document.createElement('div');
-                    clueElement.className = 'clue';
-                    clueElement.textContent = suspect.clue;
-                    clueElement.setAttribute('role', 'listitem');
-                    clueElement.setAttribute('tabindex', '0');
-                    clueElement.setAttribute('aria-label', `Clue: ${suspect.clue}`);
-                    
-                    clueElement.addEventListener('click', () => {
-                        if (!gameState.collectedClues.includes(suspect.id)) {
-                            gameState.collectedClues.push(suspect.id);
-                            clueElement.classList.add('selected');
-                            updateNotes();
-                        }
-                    });
-                    
-                    clueElement.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            if (!gameState.collectedClues.includes(suspect.id)) {
-                                gameState.collectedClues.push(suspect.id);
-                                clueElement.classList.add('selected');
-                                updateNotes();
-                            }
-                        }
-                    });
-                    
-                    cluesContainer.appendChild(clueElement);
-                }
-            });
-        }
-
-        // Update the detective's notes
-        function updateNotes() {
-            let notesHTML = `
-                <p>Victim: <span id="victim-name">${gameState.victim}</span></p>
-                <p>Time of death: ${gameState.currentScenario.timeOfDeath}</p>
-                <p>Location: ${gameState.currentScenario.location}</p>
-                <p>Weapon: ${gameState.currentScenario.weapon}</p>
-                <p><strong>Collected Clues:</strong></p>
-                <ul>
-            `;
-            
-            gameState.collectedClues.forEach(clueId => {
-                const suspect = gameState.currentScenario.suspects.find(s => s.id === clueId);
-                notesHTML += `<li>${suspect.name}: ${suspect.clue}</li>`;
-            });
-            
-            notesHTML += `</ul>`;
-            
-            if (gameState.collectedClues.length === 0) {
-                notesHTML += `<p>Your collected clues will appear here as you find contradictions.</p>`;
+        // Get a random scenario that hasn't been used recently
+        function getRandomScenario() {
+            if (usedScenarios.length >= scenarios.length) {
+                usedScenarios = [];
             }
             
-            notesContent.innerHTML = notesHTML;
+            let availableScenarios = scenarios.filter(scenario => !usedScenarios.includes(scenario.id));
+            const randomScenario = availableScenarios[Math.floor(Math.random() * availableScenarios.length)];
+            usedScenarios.push(randomScenario.id);
+            return randomScenario;
         }
 
-        // Accuse the currently selected suspect
-        function accuseSuspect() {
-            if (!gameState.selectedSuspect) return;
+        // Enhanced speech synthesis with natural voices
+        function speakAlibi(text, voiceConfig, speakerElement) {
+            const loadingElement = speakerElement.nextElementSibling;
+            if (loadingElement && loadingElement.classList.contains('voice-loading')) {
+                loadingElement.style.display = 'inline';
+            }
             
-            const isCulprit = gameState.selectedSuspect === gameState.culprit;
-            gameState.gameSolved = true;
+            const utterance = new SpeechSynthesisUtterance(text);
             
-            // Show game over screen
-            gameOverScreen.style.display = 'block';
+            utterance.rate = voiceConfig.rate;
+            utterance.pitch = voiceConfig.pitch;
+            utterance.volume = voiceConfig.volume;
+            utterance.lang = voiceConfig.lang;
             
-            if (isCulprit) {
-                const culprit = gameState.currentScenario.suspects.find(s => s.id === gameState.culprit);
-                resultMessage.innerHTML = `
-                    <p class="correct">Congratulations, Abby! Happy Birthday!</p>
-                    <p>You've correctly identified ${culprit.name} as the murderer.</p>
-                    <p>With the evidence you collected, ${culprit.name} confessed to the crime.</p>
-                    <p>Case closed!</p>
+            const voices = speechSynthesis.getVoices();
+            let selectedVoice = null;
+            
+            // Try to find a voice that matches the gender preference
+            if (voiceConfig.gender) {
+                selectedVoice = voices.find(voice => {
+                    // Check if voice name contains gender indicator
+                    const voiceName = voice.name.toLowerCase();
+                    return voiceName.includes(voiceConfig.gender) || 
+                           (voiceConfig.gender === 'female' && 
+                            (voiceName.includes('samantha') || voiceName.includes('karen') || 
+                             voiceName.includes('victoria') || voiceName.includes('serena'))) ||
+                           (voiceConfig.gender === 'male' && 
+                            (voiceName.includes('alex') || voiceName.includes('daniel') || 
+                             voiceName.includes('fred') || voiceName.includes('thomas')));
+                });
+            }
+            
+            // If no specific voice found, try to find any voice with appropriate gender
+            if (!selectedVoice) {
+                if (voiceConfig.gender === 'female') {
+                    selectedVoice = voices.find(voice => 
+                        voice.name.toLowerCase().includes('female') || 
+                        voice.name.includes('Samantha') ||
+                        voice.name.includes('Karen') ||
+                        voice.name.includes('Victoria')
+                    );
+                } else if (voiceConfig.gender === 'male') {
+                    selectedVoice = voices.find(voice => 
+                        voice.name.toLowerCase().includes('male') ||
+                        voice.name.includes('Alex') ||
+                        voice.name.includes('Daniel')
+                    );
+                }
+            }
+            
+            // If still no voice found, use the first available voice
+            if (!selectedVoice && voices.length > 0) {
+                selectedVoice = voices[0];
+            }
+            
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            
+            utterance.onstart = () => {
+                if (loadingElement) loadingElement.style.display = 'none';
+                speakerElement.style.color = 'var(--success)';
+            };
+            
+            utterance.onend = () => {
+                speakerElement.style.color = 'var(--accent)';
+            };
+            
+            utterance.onerror = () => {
+                if (loadingElement) loadingElement.style.display = 'none';
+                speakerElement.style.color = 'var(--accent)';
+            };
+            
+            speechSynthesis.speak(utterance);
+        }
+
+        // Initialize game
+        function initGame() {
+            currentScenario = getRandomScenario();
+            killerIndex = Math.floor(Math.random() * suspectsData.length);
+            killer = suspectsData[killerIndex].name;
+            
+            const scenarioIndex = currentScenario.id - 1;
+            const currentSuspectsData = suspectsData.map(suspect => {
+                return {
+                    name: suspect.name,
+                    image: suspect.image,
+                    voice: suspect.voice,
+                    relationship: suspect.relationships[scenarioIndex],
+                    description: suspect.descriptions[scenarioIndex],
+                    motive: suspect.motives[scenarioIndex],
+                    alibi: suspect.alibis[scenarioIndex],
+                    evidence: suspect.evidenceOptions[scenarioIndex]
+                };
+            });
+
+            introElement.innerHTML = `
+                <h2>Case File: ${currentScenario.title}</h2>
+                <p>${currentScenario.intro}</p>
+                <div class="case-details">
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Victim</div>
+                        <div class="case-detail-value">${currentScenario.victim}</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Cause of Death</div>
+                        <div class="case-detail-value">${currentScenario.causeOfDeath}</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Time of Death</div>
+                        <div class="case-detail-value">${currentScenario.timeOfDeath}</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Crime Scene</div>
+                        <div class="case-detail-value">${currentScenario.crimeScene}</div>
+                    </div>
+                </div>
+            `;
+
+            suspectListElement.innerHTML = '';
+            currentSuspectsData.forEach((suspect, index) => {
+                const li = document.createElement('li');
+                li.className = 'suspect-item';
+                li.innerHTML = `
+                    <img src="${suspect.image}" alt="${suspect.name}">
+                    <div class="suspect-info">
+                        <div class="suspect-name">${suspect.name}</div>
+                        <div class="suspect-relationship">${suspect.relationship}</div>
+                    </div>
                 `;
-                
-                // Show explanation
-                explanationElement.innerHTML = `
-                    <h3>Case Analysis: Why ${culprit.name} is the Culprit</h3>
-                    <p>${culprit.explanation}</p>
-                    <h4>Key Evidence:</h4>
-                    <ul>
-                        <li>Their statement: "${culprit.statement}"</li>
-                        <li>Contradiction: ${culprit.clue}</li>
-                        <li>Motive: ${generateMotive(culprit.name)}</li>
-                    </ul>
-                    <p>With this evidence, we can conclude that ${culprit.name} had the means, opportunity, and motive to commit the crime. Their alibi falls apart under scrutiny.</p>
+                li.addEventListener('click', () => showSuspectDetails(suspect, index));
+                suspectListElement.appendChild(li);
+            });
+
+            mainPanelElement.innerHTML = `
+                <div class="suspect-details">
+                    <div class="suspect-header">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Select a suspect" class="suspect-portrait">
+                        <div class="suspect-bio">
+                            <h2 class="suspect-name-large">Select a Suspect</h2>
+                            <p class="suspect-description">Click on a suspect from the list to investigate their background, motive, alibi, and evidence. Analyze all information carefully before making an accusation. Look for contradictions between their alibi and the evidence.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            detectiveNotesElement.value = '';
+            resultElement.style.display = 'none';
+            playAgainButton.style.display = 'none';
+            nextCaseButton.style.display = 'none';
+            updateStats();
+        }
+
+        // Show suspect details
+        function showSuspectDetails(suspect, index) {
+            document.querySelectorAll('.suspect-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const clickedItem = Array.from(document.querySelectorAll('.suspect-item'))[index];
+            if (clickedItem) {
+                clickedItem.classList.add('active');
+            }
+
+            currentSuspect = suspect;
+            
+            mainPanelElement.innerHTML = `
+                <div class="suspect-details fade-in">
+                    <div class="suspect-header">
+                        <img src="${suspect.image}" alt="${suspect.name}" class="suspect-portrait">
+                        <div class="suspect-bio">
+                            <h2 class="suspect-name-large">${suspect.name}</h2>
+                            <p class="suspect-description">${suspect.relationship} of the victim. ${suspect.description}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="motive-section">
+                        <div class="section-title">
+                            <span>💰</span> Potential Motive
+                        </div>
+                        <p class="motive-text">${suspect.motive}</p>
+                    </div>
+                    
+                    <div class="alibi-section">
+                        <div class="section-title">
+                            <span>📝</span> Alibi Statement
+                            <span class="speaker" onclick="window.speakCurrentAlibi(this)">🔊</span>
+                            <span class="voice-loading">Loading voice...</span>
+                        </div>
+                        <p class="alibi-text">${suspect.alibi}</p>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <div class="section-title">
+                            <span>🔎</span> Collected Evidence
+                        </div>
+                        <ul class="evidence-list">
+                            ${suspect.evidence.map(evidence => `<li class="evidence-item">${evidence}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="accuse" onclick="accuse('${suspect.name}')">
+                            <span>⚖️</span> Accuse ${suspect.name}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            window.currentSuspectForVoice = suspect;
+        }
+
+        // Global function for speaking current alibi
+        window.speakCurrentAlibi = function(speakerElement) {
+            if (window.currentSuspectForVoice) {
+                speakAlibi(window.currentSuspectForVoice.alibi, window.currentSuspectForVoice.voice, speakerElement);
+            }
+        };
+
+        // Accuse suspect
+        function accuse(name) {
+            gameState.casesPlayed++;
+            
+            const isCorrect = name === killer;
+            
+            if (isCorrect) {
+                gameState.casesSolved++;
+                gameState.currentStreak++;
+                if (gameState.currentStreak > gameState.bestStreak) {
+                    gameState.bestStreak = gameState.currentStreak;
+                }
+            } else {
+                gameState.currentStreak = 0;
+            }
+            
+            localStorage.setItem('casesSolved', gameState.casesSolved);
+            localStorage.setItem('casesPlayed', gameState.casesPlayed);
+            localStorage.setItem('currentStreak', gameState.currentStreak);
+            localStorage.setItem('bestStreak', gameState.bestStreak);
+            
+            updateStats();
+            
+            accusedTitleElement.textContent = `Investigation Result: ${isCorrect ? 'Case Solved!' : 'Wrong Accusation'}`;
+            
+            if (isCorrect) {
+                verdictElement.className = 'verdict correct';
+                verdictElement.innerHTML = `
+                    <h3 style="color: var(--success); margin-bottom: 10px;">✅ Brilliant Deduction, Detective Abby!</h3>
+                    <p>You successfully identified ${killer} as the killer. Your attention to detail and logical reasoning solved the case!</p>
                 `;
             } else {
-                const selected = gameState.currentScenario.suspects.find(s => s.id === gameState.selectedSuspect);
-                const culprit = gameState.currentScenario.suspects.find(s => s.id === gameState.culprit);
-                resultMessage.innerHTML = `
-                    <p class="incorrect">Case Unsolved!</p>
-                    <p>You incorrectly accused ${selected.name}.</p>
-                    <p>The real culprit was ${culprit.name}.</p>
-                    <p>Better luck next time, Abby.</p>
-                `;
-                
-                // Show explanation
-                explanationElement.innerHTML = `
-                    <h3>Case Analysis: Why ${culprit.name} is the Real Culprit</h3>
-                    <p>${culprit.explanation}</p>
-                    <h4>Key Evidence Against ${culprit.name}:</h4>
-                    <ul>
-                        <li>Their statement: "${culprit.statement}"</li>
-                        <li>Contradiction: ${culprit.clue}</li>
-                        <li>Motive: ${generateMotive(culprit.name)}</li>
-                    </ul>
-                    <p>While ${selected.name} had some suspicious elements in their statement, the evidence clearly points to ${culprit.name} as the murderer. Their alibi doesn't hold up when compared to the facts.</p>
+                verdictElement.className = 'verdict incorrect';
+                verdictElement.innerHTML = `
+                    <h3 style="color: var(--danger); margin-bottom: 10px;">❌ Incorrect Accusation</h3>
+                    <p>${name} is not the killer. Further investigation cleared them of suspicion.</p>
                 `;
             }
             
-            // Disable game buttons
-            accuseButton.disabled = true;
-            solveButton.disabled = true;
-        }
-
-        // Generate a random motive for a suspect
-        function generateMotive(suspectName) {
-            const motives = [
-                `Financial disputes with ${gameState.victim}`,
-                `A long-standing personal grudge`,
-                `Professional jealousy and competition`,
-                `Revenge for being unfairly treated`,
-                `Blackmail situation that escalated`,
-                `Romantic entanglement gone wrong`
-            ];
-            return motives[Math.floor(Math.random() * motives.length)];
-        }
-
-        // Solve the case by identifying the culprit
-        function solveCase() {
-            // Create a modal for suspect selection
-            const modal = document.createElement('div');
-            modal.style.position = 'fixed';
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.width = '100%';
-            modal.style.height = '100%';
-            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            modal.style.display = 'flex';
-            modal.style.justifyContent = 'center';
-            modal.style.alignItems = 'center';
-            modal.style.zIndex = '1000';
-            
-            const modalContent = document.createElement('div');
-            modalContent.style.backgroundColor = '#161b22';
-            modalContent.style.padding = '30px';
-            modalContent.style.borderRadius = '10px';
-            modalContent.style.width = '90%';
-            modalContent.style.maxWidth = '500px';
-            modalContent.style.textAlign = 'center';
-            modalContent.style.border = '1px solid #30363d';
-            
-            modalContent.innerHTML = `
-                <h2 style="color: #e94560; margin-bottom: 20px;">Who is the murderer?</h2>
-                <p style="margin-bottom: 20px; color: #8b949e;">Select the real culprit:</p>
-                <div id="solve-options" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;"></div>
-                <button id="cancel-solve" style="background-color: #30363d; color: #8b949e;">Cancel</button>
+            analysisElement.innerHTML = `
+                <h3>Investigation Analysis</h3>
+                <p>The key contradiction was in <span class="clue-highlight">${killer}'s alibi</span>:</p>
+                <p>${currentScenario.killerReveals[killerIndex]}</p>
             `;
             
-            modal.appendChild(modalContent);
-            document.body.appendChild(modal);
+            killerRevealTitleElement.textContent = "The Real Killer";
+            killerRevealElement.textContent = `${killer}! ${currentScenario.killerReveals[killerIndex]}`;
             
-            // Add suspects to the modal
-            const solveOptions = document.getElementById('solve-options');
-            gameState.currentScenario.suspects.forEach(suspect => {
-                const option = document.createElement('button');
-                option.textContent = suspect.name;
-                option.style.padding = '10px';
-                option.style.backgroundColor = '#21262d';
-                option.style.color = '#e6e6e6';
-                option.style.border = '1px solid #30363d';
-                option.style.borderRadius = '5px';
-                
-                option.addEventListener('click', () => {
-                    gameState.selectedSuspect = suspect.id;
-                    document.body.removeChild(modal);
-                    accuseSuspect();
-                });
-                
-                solveOptions.appendChild(option);
-            });
+            resultElement.style.display = 'block';
+            playAgainButton.style.display = 'inline-flex';
+            nextCaseButton.style.display = 'inline-flex';
             
-            // Cancel button
-            document.getElementById('cancel-solve').addEventListener('click', () => {
-                document.body.removeChild(modal);
-            });
+            resultElement.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Update game statistics
+        function updateStats() {
+            casesSolvedElement.textContent = gameState.casesSolved;
+            currentStreakElement.textContent = gameState.currentStreak;
+            
+            const accuracy = gameState.casesPlayed > 0 
+                ? Math.round((gameState.casesSolved / gameState.casesPlayed) * 100) 
+                : 0;
+            accuracyElement.textContent = `${accuracy}%`;
         }
 
         // Event listeners
-        startButton.addEventListener('click', startGame);
-        accuseButton.addEventListener('click', accuseSuspect);
-        solveButton.addEventListener('click', solveCase);
-        playAgainButton.addEventListener('click', initGame);
+        playAgainButton.addEventListener('click', () => {
+            initGame();
+        });
 
-        // Initialize the game when the page loads
-        window.addEventListener('load', function() {
-            // Show landing page by default
-            landingPage.style.display = 'flex';
-            gameContainer.style.display = 'none';
+        nextCaseButton.addEventListener('click', () => {
+            initGame();
+        });
+
+        // Load voices and initialize game
+        window.addEventListener('load', () => {
+            let voices = [];
+            speechSynthesis.onvoiceschanged = () => {
+                voices = speechSynthesis.getVoices();
+            };
+            
+            initGame();
         });
     </script>
 </body>
-
 </html>
-
