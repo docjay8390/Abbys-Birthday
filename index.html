@@ -4,45 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Abby! | Crime Investigation Game</title>
+    <meta name="description" content="A special birthday mystery game for Abby's 26th birthday with floating animations and interactive investigation">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        .birthday-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            padding: 0 20px;
-        }
-
-        .gallery-image {
-            max-width: 300px;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-image:hover {
-            transform: scale(1.05);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .gallery-image {
-                max-width: 100%;
-                height: auto;
-            }
-        }
-        @media (max-width: 768px) {
-    .gallery-image {
-        width: 48%; /* Two images per row */
-        aspect-ratio: 1 / 1; /* Square aspect ratio */
-        object-fit: cover; /* Maintain image coverage */
-        border-radius: 10px; /* Optional: for rounded corners */
-    }
-}
+        /* SEO and Performance Optimizations */
         :root {
             --dark-bg: #1a1a2e;
             --darker-bg: #16213e;
@@ -70,24 +35,123 @@
             line-height: 1.6;
             padding: 20px;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-        
+
+        /* Birthday Animation Styles - Only on landing page */
+        .birthday-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-item {
+            position: absolute;
+            bottom: -50px;
+            font-size: 1.5rem;
+            animation: floatUp 8s linear infinite;
+            opacity: 0;
+        }
+
+        .heart { color: #e94560; }
+        .gift { color: #4caf50; }
+        .balloon { color: #2196f3; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @import url(https://fonts.googleapis.com/css?family=Lato:300italic);
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        /* Improved Gallery Styles */
+        .birthday-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+            padding: 0 10px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            aspect-ratio: 1;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(233, 69, 96, 0.4);
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Existing styles remain the same below */
         .game-container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         
-        /* Birthday Hero Section */
         .birthday-hero {
             background: linear-gradient(135deg, #e94560 0%, #ff6b81 50%, #ff8fa3 100%);
             color: white;
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             border-radius: 15px;
             margin-bottom: 30px;
             box-shadow: 0 15px 35px rgba(233, 69, 96, 0.4);
             position: relative;
             overflow: hidden;
+            z-index: 2;
         }
         
         .birthday-hero::before {
@@ -142,6 +206,7 @@
             gap: 12px;
             position: relative;
             overflow: hidden;
+            z-index: 2;
         }
         
         .birthday-cta::before {
@@ -167,58 +232,18 @@
         .birthday-cta:active {
             transform: translateY(0);
         }
-        
-        .birthday-decoration {
-            position: absolute;
-            font-size: 2.5rem;
-            opacity: 0.8;
-            animation: float 6s infinite ease-in-out;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-        }
-        
-        .decoration-1 {
-            top: 30px;
-            left: 8%;
-            animation-delay: 0s;
-        }
-        
-        .decoration-2 {
-            top: 50px;
-            right: 12%;
-            animation-delay: 1.5s;
-        }
-        
-        .decoration-3 {
-            bottom: 40px;
-            left: 12%;
-            animation-delay: 3s;
-        }
-        
-        .decoration-4 {
-            bottom: 30px;
-            right: 8%;
-            animation-delay: 4.5s;
-        }
-        
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            33% { transform: translateY(-25px) rotate(5deg); }
-            66% { transform: translateY(-15px) rotate(-3deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-        
-        /* Game Content (initially hidden) */
+
+        /* Rest of your existing CSS styles remain exactly the same */
         .game-content {
             display: none;
         }
         
-        /* Header with Detective Badge */
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -670,6 +695,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* Responsive Design */
         @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
@@ -720,48 +746,94 @@
             
             .birthday-title {
                 font-size: 2.8rem;
-                
             }
             
             .birthday-subtitle {
                 font-size: 1.4rem;
             }
+            
+            .birthday-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .birthday-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .birthday-title {
+                font-size: 2.2rem;
+            }
+            
+            .birthday-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .birthday-cta {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Birthday Animation Background - Only shows on landing page -->
+    <div class="birthday-animation" id="birthday-animation"></div>
+
     <div class="game-container">
         <!-- Birthday Hero Section -->
         <div class="birthday-hero" id="birthday-hero">
-            <div class="birthday-decoration decoration-1">🎈</div>
-            <div class="birthday-decoration decoration-2">🎁</div>
-            <div class="birthday-decoration decoration-3">🎂</div>
-            <div class="birthday-decoration decoration-4">🎉</div>
-            
             <div class="birthday-content">
                 <h1 class="birthday-title" style="color: white !important;">Happy Birthday Abby!</h1>
                 <p class="birthday-subtitle">Your friends have prepared a special mystery for you to solve on your special day!</p>
+
                 <button class="birthday-cta" id="start-game">
                     <span>🕵️‍♀️</span> Solve The Mystery
                 </button>
-            </br></br></br></br>
             </div>
+
+            <!-- Improved Gallery -->
             <div class="birthday-gallery">
-                <img src="./images/pic1.jpg" alt="Birthday Decoration 1" class="gallery-image">
-                <img src="./images/pic2.jpg" alt="Birthday Decoration 2" class="gallery-image">
-                <img src="./images/pic3.jpg" alt="Birthday Decoration 3" class="gallery-image">
-                <img src="./images/pic4.jpg" alt="Birthday Decoration 4" class="gallery-image">
-                <img src="./images/pic5.jpg" alt="Birthday Decoration 5" class="gallery-image">
-                <img src="./images/pic6.jpg" alt="Birthday Decoration 6" class="gallery-image">
-                <img src="./images/pic7.jpg" alt="Birthday Decoration 7" class="gallery-image">
-                <img src="./images/pic8.jpg" alt="Birthday Decoration 8" class="gallery-image">
+                <div class="gallery-item">
+                    <img src="./images/pic1.jpg" alt="Birthday Memory 1" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/pic2.jpg" alt="Birthday Memory 2" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/pic3.jpg" alt="Birthday Memory 3" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/pic4.jpg" alt="Birthday Memory 4" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/pic5.jpg" alt="Birthday Memory 5" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/pic6.jpg" alt="Birthday Memory 6" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/pic7.jpg" alt="Birthday Memory 7" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/pic8.jpg" alt="Birthday Memory 8" class="gallery-image" loading="lazy">
+                    <div class="gallery-overlay"></div>
+                </div>
             </div>
-            
         </div>
-        
         
         <!-- Game Content (initially hidden) -->
         <div class="game-content" id="game-content">
+            <!-- Your existing game content remains exactly the same -->
             <header>
                 <div class="detective-badge">
                     <img src="./images/abbyyy.jpg" alt="Detective Abby">
@@ -820,10 +892,60 @@
     </div>
 
     <script>
+        // Create floating items animation - ONLY for landing page
+        function createFloatingItem() {
+            const animationContainer = document.getElementById('birthday-animation');
+            // Only create items if we're on the landing page
+            if (document.getElementById('birthday-hero').style.display !== 'none') {
+                const items = ['❤️', '💖', '🎁', '🎀', '🎈', '✨'];
+                const types = ['heart', 'gift', 'balloon'];
+                
+                const item = document.createElement('div');
+                const randomType = types[Math.floor(Math.random() * types.length)];
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                
+                item.className = `floating-item ${randomType}`;
+                item.textContent = randomItem;
+                item.style.left = Math.random() * 100 + 'vw';
+                item.style.animationDuration = (6 + Math.random() * 6) + 's';
+                item.style.animationDelay = Math.random() * 2 + 's';
+                
+                animationContainer.appendChild(item);
+                
+                // Remove element after animation completes
+                setTimeout(() => {
+                    if (item.parentNode) {
+                        item.parentNode.removeChild(item);
+                    }
+                }, 14000);
+            }
+        }
+
+        // Start creating floating items - ONLY for landing page
+        function startFloatingAnimation() {
+            // Only start animation if we're on the landing page
+            if (document.getElementById('birthday-hero').style.display !== 'none') {
+                // Create initial items
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => createFloatingItem(), i * 500);
+                }
+                
+                // Continue creating items
+                setInterval(createFloatingItem, 800);
+            }
+        }
+
+        // Stop floating animation when entering game
+        function stopFloatingAnimation() {
+            const animationContainer = document.getElementById('birthday-animation');
+            animationContainer.innerHTML = ''; // Clear all floating elements
+        }
+
         // Birthday functionality
         document.getElementById('start-game').addEventListener('click', function() {
             document.getElementById('birthday-hero').style.display = 'none';
             document.getElementById('game-content').style.display = 'block';
+            stopFloatingAnimation(); // Stop animations when game starts
             
             // Optional: Play birthday sound
             try {
@@ -834,13 +956,22 @@
             }
         });
 
+        // Start animation when page loads - only if on landing page
+        window.addEventListener('load', function() {
+            startFloatingAnimation();
+            // Your existing game initialization code
+            initGame();
+        });
+
+        // Your existing game JavaScript code remains exactly the same below
         // Game state
         const gameState = {
             attempts: 0
         };
 
-        // Crime scenario
+        // Crime scenario (your existing scenario object)
         const scenario = {
+            // ... your existing scenario data remains exactly the same
             id: 1,
             title: "The Poisoned Coffee — The Murder of Mr. Noel Rodriguez",
             victim: "Mr. Noel Rodriguez",
@@ -877,16 +1008,14 @@
                     evidence: [
                         "Her fingerprints found on the coffee cup",
                         "Recently yelled at and almost fired for being always late in work",
+                        "Investigators found a supermarket receipt showing Mikay had bought rat poison two days before the party",
                         "Witnesses said she appeared anxious and distracted",
                         "Was seen rushing to leave the party around 9:20 PM saying she will meet her boyfriend"
                     ],
                     criticalEvidence: [
                         "Fingerprints on the murder weapon (coffee cup)",
-                        "Strong motive (resentment after reprimand)"
-                    ],
-                    contradictions: [
-                        "Her fingerprints could have been from earlier when handling cups",
-                        "Multiple witnesses confirm her alibi in the backyard"
+                        "Strong motive (resentment after reprimand)",
+                        "Receipt for rat poison purchased before party"
                     ]
                 },
                 {
@@ -897,8 +1026,7 @@
                     motive: "Had a ₱830,000 debt to Mr. Noel with an ultimatum to pay or face legal action.",
                     alibi: "I was on the terrace with Mrs. Rodriguez. Around 11:00 PM, she said she would check on Mr. Noel. Then I heard her scream and rushed to see what happened.",
                     evidence: [
-                        "Had ₱830,000 debt with ultimatum from Mr. Noel",
-                        "Usually prepared coffee for Mr. Noel at work",
+                        "Had ₱830,000 debt with ultimatum to pay or face legal action. from Mr. Noel",
                         "CCTV footage shows her entering Mr. Noel's room at 9:25 PM with something unclear in her hand and leaving quickly.",
                         "Deleted messages on her phone about 'solving her problem before its too late'",
                         "Was calm and cooperative during investigation"
@@ -906,11 +1034,7 @@
                     criticalEvidence: [
                         "Strong financial motive with legal threat",
                         "CCTV evidence places her at the scene",
-                        "Knowledge of coffee preparation habits"
-                    ],
-                    contradictions: [
-                        "No physical evidence linking her to the poison",
-                        "Her calm behavior doesn't match a murderer's profile"
+                        "Knowledge of Mr. Noel's schedule and habits"
                     ]
                 },
                 {
@@ -921,19 +1045,15 @@
                     motive: "Resentment from constant public humiliation by Mr. Noel.",
                     alibi: "I was in the comfort room for almost an hour because I ate too much during the party and got a bad stomachache. MJ saw me going in. Whoever poisoned him shall go to jail!",
                     evidence: [
-                        "Investigators found a supermarket receipt showing Louis had bought rat poison two days before the party",
                         "Coworkers revealed that Louis resented Mr. Noel for frequently embarrassing him in front of others",
                         "Forensic analysis showed traces of the poison on his shirt sleeve, suggesting possible contact with the substance",
-                        "Was uneasy and quiet the whole time of the investigation"
+                        "Aggression while interviewed, often deflecting questions",
+                        "Record of visiting a psychologist for anger management issues lastweek"
                     ],
                     criticalEvidence: [
-                        "Receipt for rat poison purchased before party",
+                        "visiting a psychologist for anger management issues last week",
                         "Traces of poison on his shirt sleeve",
                         "Strong motive (humiliation)"
-                    ],
-                    contradictions: [
-                        "MJ confirmed seeing him go to the restroom",
-                        "Mentioned 'poison' when it was confidential information"
                     ]
                 },
                 {
@@ -952,17 +1072,12 @@
                     criticalEvidence: [
                         "Direct access to the coffee (prepared and delivered it)",
                         "Strong blackmail motive",
-                        "Fingerprints on the coffee cup and tray"
+                        "Fingerprints on the coffee cup and tray but no poison traces on her hands"
                     ],
-                    contradictions: [
-                        "No strong evidence of poison handling",
-                        "Her reaction to the death appeared genuine",
-                        "Louis confirmed seeing her go to wash hands"
-                    ]
                 }
             ],
             killerName: "Louis",
-            killerReveal: "When confronted with the evidence, Louis finally confessed. He admitted that while MJ was preparing the coffee, she briefly left the kitchen to use the restroom. In that short moment, Louis saw the opportunity to take revenge. He quietly opened the small packet of poison from his pocket and poured it into the cup, then left before anyone saw him. 'I didn't mean for it to happen that way,' Louis muttered during his confession. 'I just hated him so much. He never respected me — not once.' He had been planning it for weeks, ever since Mr. Noel humiliated him during a company meeting. The poison he bought online was meant to 'teach him a lesson,' but his anger turned it into murder."
+            killerReveal: "When confronted with the evidence, Louis finally confessed. He admitted that while MJ was preparing the coffee, she briefly left the kitchen to use the restroom. In that short moment, Louis saw the opportunity to take revenge. He quietly opened the small packet of poison from his bag that he stole from Mikay earlier and poured it into the cup, then left before anyone saw him. 'I didn't mean for it to happen that way,' Louis muttered during his confession. 'I just hated him so much. He never respected me — not once.' He had been planning it for weeks, ever since Mr. Noel humiliated him during a company meeting. The poison he bought online was meant to 'teach him a lesson,' but his anger turned it into murder."
         };
 
         // Game variables
@@ -1143,7 +1258,7 @@
                     <p>You successfully identified ${scenario.killerName} as the killer by analyzing the evidence and identifying the contradictions in their story!</p>
                     <div class="critical-evidence" style="margin-top: 15px;">
                         <strong>The Critical Clue:</strong>
-                        <p>After reviewing all testimonies and evidence, Detective Abby noticed something crucial:
+                        <p>After reviewing all testimonies and evidence, Abby noticed something crucial:
                             None of the suspects were told the real cause of death — only that Mr. Noel had "found dead in his bed."
                             </br></br>
                             But when Louis was questioned, he said something odd:
@@ -1186,15 +1301,15 @@
         });
 
         playAgainButton.addEventListener('click', () => {
+            // When playing again, show landing page with animations
+            document.getElementById('birthday-hero').style.display = 'block';
+            document.getElementById('game-content').style.display = 'none';
+            startFloatingAnimation(); // Restart animations
             initGame();
         });
 
-        // Initialize the game
-        window.addEventListener('load', () => {
-            initGame();
-        });
+        // Make accuse function global
+        window.accuse = accuse;
     </script>
 </body>
-
 </html>
-
